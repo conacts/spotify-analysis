@@ -23,22 +23,22 @@
   </head>
 
   <body>
-      <div id="main-navbar" style="background-color: white; padding-left: 1rem; padding-top: 1rem; padding-bottom: 1rem; width: 100%; position: fixed; top: 0; display: none;">
+      <div id="main-navbar" style="z-index: 2; background-color: white; padding-left: 1rem; padding-top: 1rem; width: 100%; position: fixed; top: 0; display: none;">
         <ul class="nav nav-tabs">
           <li class="nav-item" id="home-link">
             <a class="nav-link active" href="#home">Home</a>
           </li>
-          <li class="nav-item" id="songs-link">
-            <a class="nav-link" href="#songs">Top Songs</a>
+          <li class="nav-item" id="tracks-link">
+            <a class="nav-link" href="#tracks">Top Songs</a>
           </li>
           <li class="nav-item" id="artists-link">
             <a class="nav-link" href="#artists">Top Artists</a>
           </li>
-          <li class="nav-item" id="habits-link">
-            <a class="nav-link" href="#habits">Listening Habits</a>
+          <li class="nav-item" id="playlistStats-link">
+            <a class="nav-link" href="#playlistStats">Playlist Statistics</a>
           </li>
-          <li class="nav-item" id="stats-link">
-            <a class="nav-link" href="#stats">Stats</a>
+          <li class="nav-item" id="trackStats-link">
+            <a class="nav-link" href="#trackStats">Song Statistics</a>
           </li>
         </ul>
       </div>
@@ -58,40 +58,39 @@
     <script id="user-profile-template" type="text/x-handlebars-template">
 
       <!-- HTML CODE STARTS HERE -->
-      <div id="home" style="margin-top:4rem;">
-        <h1>Hello {{display_name}}!</h1>
-        <h2>you spent 200 hours this week</h2>
-        <h2>you spent 1200 hours this month</h2>
-        <h2>you spent 11200 hours this year</h2>
+      <div id="home">
+        <h1 style="text-align: center; padding-top: 4rem;">Hi {{display_name}}!</h1>
+        <div style="text-align: center;">
+          <img style="width: 100%" src="./dog.webp">
+        </div>
       </div>
 
-      <div id="artists" style="margin-top:4rem;">
+      <div id="artists">
         <h1>artists</h1>
         <h1>artists</h1>
         <h1>artists</h1>
         <h1>artists</h1>
       </div>
 
-      <div id="songs" style="margin-top:4rem;">
+      <div id="tracks">
         <h1>songs</h1>
         <h1>songs</h1>
         <h1>songs</h1>
         <h1>songs</h1>
       </div>
 
-      <div id="habits" style="margin-top:4rem;">
-        <h1>habits</h1>
-        <h1>habits</h1>
-        <h1>habits</h1>
-        <h1>habits</h1>
-        <h1>habits</h1>
+      <div id="playlistStats">
+        <h1>playlistStats</h1>
+        <h1>playlistStats</h1>
+        <h1>playlistStats</h1>
+        <h1>playlistStats</h1>
+        <h1>playlistStats</h1>
       </div>
 
-      <div id="stats" style="margin-top:4rem;">
-        <h1>stats</h1>
-        <h1>stats</h1>
-        <h1>stats</h1>
-        <h1>stats</h1>
+      <div id="trackStats">
+        <h1>trackStats</h1>
+        <h1>trackStats</h1>
+        <h1>trackStats</h1>
       </div>
 
       <!-- HTML CODE ENDS HERE -->
@@ -157,9 +156,9 @@
                   $('#loggedin').show();
                   $('#home').show();
                   $('#artists').hide();
-                  $('#songs').hide();
-                  $('#habits').hide();
-                  $('#stats').hide();
+                  $('#tracks').hide();
+                  $('#playlistStats').hide();
+                  $('#trackStats').hide();
                 }
             });
 
@@ -199,46 +198,46 @@
           // show home page
           document.getElementById('home-link').addEventListener('click', function() {
             $('#home').show();
-            $('#stats').hide();
+            $('#trackStats').hide();
             $('#artists').hide();
-            $('#songs').hide();
-            $('#habits').hide();
+            $('#tracks').hide();
+            $('#playlistStats').hide();
           });
 
           // show artists page
           document.getElementById('artists-link').addEventListener('click', function() {
             $('#artists').show();
-            $('#songs').hide();
+            $('#tracks').hide();
             $('#home').hide();
-            $('#habits').hide();
-            $('#stats').hide();
+            $('#playlistStats').hide();
+            $('#trackStats').hide();
           });
 
           // show songs page
-          document.getElementById('songs-link').addEventListener('click', function() {
-            $('#songs').show();
+          document.getElementById('tracks-link').addEventListener('click', function() {
+            $('#tracks').show();
             $('#home').hide();
             $('#artists').hide();
-            $('#habits').hide();
-            $('#stats').hide();
+            $('#playlistStats').hide();
+            $('#trackStats').hide();
           });
 
-          // shows habits page
-          document.getElementById('habits-link').addEventListener('click', function() {
-            $('#habits').show();
+          // shows playlistStats page
+          document.getElementById('playlistStats-link').addEventListener('click', function() {
+            $('#playlistStats').show();
             $('#artists').hide();
             $('#home').hide();
-            $('#songs').hide();
-            $('#stats').hide();
+            $('#tracks').hide();
+            $('#trackStats').hide();
           });
 
           // show stats page
-          document.getElementById('stats-link').addEventListener('click', function() {
-            $('#stats').show();
+          document.getElementById('trackStats-link').addEventListener('click', function() {
+            $('#trackStats').show();
             $('#artists').hide();
             $('#home').hide();
-            $('#songs').hide();
-            $('#habits').hide();
+            $('#tracks').hide();
+            $('#playlistStats').hide();
           });
 
           $(document).ready(function() {
@@ -248,19 +247,17 @@
               });
           /*
               $('ul li').click(function() {
-                  $('#stats').hide();
+                  $('#trackStats').hide();
                   $('#artists').hide();
                   $('#home').hide();
                   $('#songs').hide();
-                  $('#habits').hide();
+                  $('#playlistStats').hide();
                   var curtab = '#' + $(this).get(0).id;
                   console.log(curtab);
                   $(curtab).show();
               });
           */
           });
-
-
         }
       })();
     </script>
