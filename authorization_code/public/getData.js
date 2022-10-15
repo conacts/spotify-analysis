@@ -1,7 +1,10 @@
-// builds bootstrapped theme list of artists
+let sd;
+/* 
+--> builds bootstrapped theme list of artists
+
+*/
 function buildArtists50(r) {
     var data = r.items;
-    console.log(data);
     $('#artists').empty();
     $('#artists').append('<div style="padding-top: 4rem;"></div>');
     $('#artists').append('<ul class="list-group list-group-flush"');
@@ -15,10 +18,13 @@ function buildArtists50(r) {
     $('#artists').append('</ul>');
 }
 
-// builds bootstrapped theme list of songs
+/*
+builds bootstrapped theme list of songs
+
+
+*/
 function buildTracks50(r) {
     var data = r.items;
-    console.log(data);
     $('#tracks').empty();
     $('#tracks').append('<div style="padding-top: 4rem;"></div>');
     $('#tracks').append('<ul class="list-group list-group-flush" style="margin-top: 4rem;"');
@@ -35,9 +41,126 @@ function buildTracks50(r) {
     $('#tracks').append('</ul>');
 }
 
-// grabs moods from all the songs
-function getMoods(r) {
-    let moods = [];
-    data = r.items;
-    return moods;
+/*
+
+
+*/
+function buildPlaylistStats(r) {
+    var data = r.items;
 }
+
+// playlistStats 
+/*
+
+
+*/
+function getPlaylistStats(r, access_token) {
+    $.ajax({
+        url: r,
+        headers: {
+            'Authorization': 'Bearer ' + access_token,
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+        },
+        success: function(response) {
+            getPlaylistStats(response);
+        }
+    });
+}
+
+/*
+
+
+*/
+function buildPlaylistButton(r, access_token) {
+    data = r.items;
+
+    for (let i=0; i < data.length; i++) {
+        $('#addPlaylistsHere').append(
+              '<a class="dropdown-item" onclick="buildPlaylistStats(\'' + data[i].id +  '\',\'' + access_token + '\')">' +  data[i].name + '</a>'
+        );
+    }
+}
+
+
+/*
+
+
+*/
+function buildPlaylistStats(id, access_token) {
+    $.ajax({
+        url: "https://api.spotify.com/v1/playlists/" + id + "/tracks?limit=50",
+        headers: {
+            'Authorization': 'Bearer ' + access_token,
+        },
+        success: function(response) {
+            // var [songMetric, songs] = buildPlaylistMetrics(response, access_token);
+            songs = buildPlaylistMetrics(response, access_token);
+            var danceabilityList = [];
+            var energyList = [];
+            var valenceList = [];
+            var tempoList = [];
+            for (var i=0; i < songMetric.length; i++) {
+                danceabilityList.push(songMetric[i].danceability);
+                energyList.push(songMetric[i].energy);
+                valenceList.push(songMetric[i].valence);
+                tempoList.push(songMetric[i].tempo);
+            }
+        }
+    });
+}
+
+/*
+
+
+*/
+function buildPlaylistMetrics(r, access_token) {
+    data = r.items;
+    var ids = ''; 
+    var songs = [];
+    var songData = '';
+    for (var i = 0; i < data.length; i++) {
+        var id = data[i].track.id;
+        if (typeof(id) != "undefined") {
+            ids += data[i].track.id + ',';
+            songs.push(data[i].track.name);
+        }
+    }
+    console.log('faggy');
+    getSongData(ids, access_token).then((
+        function(data) {
+            return data;
+        }
+    ));
+    return songs;
+    
+}
+
+/*
+params: id "id" / ids "{id, id, id}"
+returns: song data array
+
+*/
+async function getSongData(ids, access_token) {
+    let response = new Promise(function(resolve, reject) {
+        resolve($.ajax({
+            url: 'https://api.spotify.com/v1/audio-features?ids=' + ids, 
+            headers: {
+                'Accept': 'application/json',
+                'Authorization': 'Bearer ' + access_token,
+            },
+        }));
+    });
+    console.log(response);
+    sd = await response;
+    return response;
+
+}
+
+/* 
+
+them charts go boom
+
+function buildCharts() {
+}
+*/
